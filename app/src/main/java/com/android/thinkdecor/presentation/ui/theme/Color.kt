@@ -1,4 +1,4 @@
-package com.android.thinkdecor.ui.theme
+package com.android.thinkdecor.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
