@@ -11,6 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph
+import androidx.navigation.compose.rememberNavController
+import com.android.thinkdecor.presentation.navigation.NavGraph
+import com.android.thinkdecor.presentation.navigation.Routes
 import com.android.thinkdecor.ui.theme.ThinkDecorTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +23,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ThinkDecorTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+                NavGraph(
+                    navController = navController,
+                    startDestination = Routes.SignIn.route
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ThinkDecorTheme {
-        Greeting("Android")
     }
 }
