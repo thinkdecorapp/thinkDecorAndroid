@@ -23,7 +23,8 @@ import com.android.thinkdecor.presentation.auth.screens.SuccessPopup
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String = Routes.SignIn.route
+    startDestination: String = Routes.SignIn.route,
+    onSignInSuccess: () -> Unit = {}
 ) {
     NavHost(
         navController = navController,
@@ -37,9 +38,7 @@ fun NavGraph(
                     navController.navigate(Routes.SignUp.route)
                 },
                 onSignInClick = {
-                    navController.navigate(Routes.ChooseInterests.route) {
-                        popUpTo(Routes.SignIn.route) { inclusive = true }
-                    }
+                    onSignInSuccess()
                 },
                 onForgotPasswordClick = {
                     navController.navigate(Routes.ForgotPassword.route)
