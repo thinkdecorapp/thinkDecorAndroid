@@ -12,22 +12,21 @@
         android:theme="@style/Theme.ThinkDecor">
 
         <activity
-            android:name=".presentation.DashboardActivity"
+            android:name=".presentation.dashboard.DashboardActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
+            android:theme="@style/Theme.ThinkDecor">
+
+        </activity>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:exported="true"
             android:theme="@style/Theme.ThinkDecor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".presentation.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.ThinkDecor">
-
         </activity>
     </application>
 

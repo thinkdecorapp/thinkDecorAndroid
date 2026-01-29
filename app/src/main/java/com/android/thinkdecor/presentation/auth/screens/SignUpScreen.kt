@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,9 +24,8 @@ import com.android.thinkdecor.presentation.auth.components.FilledInput
 import com.android.thinkdecor.presentation.auth.components.PrimaryButton
 import com.android.thinkdecor.presentation.auth.components.SocialLoginButton
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
-import com.android.thinkdecor.ui.theme.HintColor
-import com.android.thinkdecor.ui.theme.PrimaryGreen
-import com.android.thinkdecor.ui.theme.TitleColor
+import com.android.thinkdecor.presentation.ui.theme.HintColor
+import com.android.thinkdecor.presentation.ui.theme.TitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +52,7 @@ fun SignUpScreen(
         Spacer(Modifier.height(8.dp))
 
         Text(
-            text = "Lorem ipsum dolor sit amet, consectetur",
+            text = "Enter your details to create a new account.",
             fontSize = 14.sp,
             color = HintColor
         )
@@ -99,18 +95,15 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(28.dp))
 
-        if (fullName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-            PrimaryButton(
-                "Create An Account",
-                onClick = { onSignUpClick(email) }
-            )
-        }else{
-            PrimaryButton(
-                "Create An Account",
-                onClick = {},
-                enabled = false
-            )
-        }
+        val isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        val isFormValid =
+            fullName.trim().split(" ").size >= 2 && isEmailValid && password.length >= 6
+
+        PrimaryButton(
+            "Create An Account",
+            onClick = { onSignUpClick(email) },
+            enabled = isFormValid
+        )
 
         Spacer(Modifier.height(24.dp))
 

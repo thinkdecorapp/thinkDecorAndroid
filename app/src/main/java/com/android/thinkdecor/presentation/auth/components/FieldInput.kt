@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.android.thinkdecor.ui.theme.FieldBg
-import com.android.thinkdecor.ui.theme.HintColor
+import com.android.thinkdecor.presentation.ui.theme.FieldBg
+import com.android.thinkdecor.presentation.ui.theme.HintColor
 
 @Composable
 fun FilledInput(

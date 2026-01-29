@@ -21,8 +21,8 @@ import com.android.thinkdecor.presentation.auth.components.FilledInput
 import com.android.thinkdecor.presentation.auth.components.PrimaryButton
 import com.android.thinkdecor.presentation.components.InterestChip
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
-import com.android.thinkdecor.ui.theme.HintColor
-import com.android.thinkdecor.ui.theme.TitleColor
+import com.android.thinkdecor.presentation.ui.theme.HintColor
+import com.android.thinkdecor.presentation.ui.theme.TitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
