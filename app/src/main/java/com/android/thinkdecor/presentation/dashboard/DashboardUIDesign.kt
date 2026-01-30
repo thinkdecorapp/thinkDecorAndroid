@@ -50,11 +50,8 @@ fun DashboardUIDesign() {
     Scaffold(
         bottomBar = {
             CustomBottomNavigation(
-                selectedTab = selectedTab,
-                onTabSelected = { selectedTab = it }
-            )
-        },
-        containerColor = Color(0xFFF9F9F9) // Light background as seen in screenshot
+                selectedTab = selectedTab, onTabSelected = { selectedTab = it })
+        }, containerColor = Color(0xFFF9F9F9) // Light background as seen in screenshot
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -75,8 +72,7 @@ fun DashboardUIDesign() {
 
 @Composable
 fun CustomBottomNavigation(
-    selectedTab: Int,
-    onTabSelected: (Int) -> Unit
+    selectedTab: Int, onTabSelected: (Int) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -103,16 +99,14 @@ fun CustomBottomNavigation(
                     icon = Icons.Outlined.Home,
                     label = "Home",
                     isSelected = selectedTab == 0,
-                    onClick = { onTabSelected(0) }
-                )
+                    onClick = { onTabSelected(0) })
 
                 // Explore
                 BottomNavItem(
                     icon = Icons.Outlined.Home,
                     label = "Explore",
                     isSelected = selectedTab == 1,
-                    onClick = { onTabSelected(1) }
-                )
+                    onClick = { onTabSelected(1) })
 
                 // Space for the central FAB
                 Spacer(modifier = Modifier.width(60.dp))
@@ -122,16 +116,14 @@ fun CustomBottomNavigation(
                     icon = Icons.Outlined.FavoriteBorder,
                     label = "Inbox",
                     isSelected = selectedTab == 3,
-                    onClick = { onTabSelected(3) }
-                )
+                    onClick = { onTabSelected(3) })
 
                 // Profile
                 BottomNavItem(
                     icon = Icons.Outlined.Person,
                     label = "Profile",
                     isSelected = selectedTab == 4,
-                    onClick = { onTabSelected(4) }
-                )
+                    onClick = { onTabSelected(4) })
             }
         }
 
@@ -140,8 +132,7 @@ fun CustomBottomNavigation(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .clip(CircleShape)
-                .clickable { onTabSelected(2) },
-            contentAlignment = Alignment.Center
+                .clickable { onTabSelected(2) }, contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_scan),
@@ -155,10 +146,7 @@ fun CustomBottomNavigation(
 
 @Composable
 fun BottomNavItem(
-    icon: ImageVector,
-    label: String,
-    isSelected: Boolean,
-    onClick: () -> Unit
+    icon: ImageVector, label: String, isSelected: Boolean, onClick: () -> Unit
 ) {
     val contentColor = if (isSelected) Color(0xFF056D5E) else Color(0xFF9E9E9E)
 
