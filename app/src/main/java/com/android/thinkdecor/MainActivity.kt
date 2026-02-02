@@ -1,10 +1,12 @@
-package com.android.thinkdecor
+package com.android.thinkdecor.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
+import com.android.thinkdecor.presentation.dashboard.DashboardActivity
 import com.android.thinkdecor.presentation.navigation.NavGraph
 import com.android.thinkdecor.presentation.navigation.Routes
 import com.android.thinkdecor.presentation.ui.theme.ThinkDecorTheme
@@ -15,10 +17,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ThinkDecorTheme {
-                val navController = rememberNavController()
                 NavGraph(
-                    navController = navController,
-                    startDestination = Routes.SignIn.route
+                    navController = rememberNavController(),
+                    startDestination = Routes.SignIn.route,
+                    onSignInSuccess = {
+                        val intent = Intent(this@MainActivity, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                 )
             }
         }
