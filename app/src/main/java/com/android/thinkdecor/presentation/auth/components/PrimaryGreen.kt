@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.thinkdecor.ui.theme.PrimaryGreen
+import com.android.thinkdecor.presentation.ui.theme.PrimaryGreen
 
 @Composable
 fun PrimaryButton(
@@ -38,7 +38,7 @@ fun PrimaryButton(
         Text(
             text = text,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

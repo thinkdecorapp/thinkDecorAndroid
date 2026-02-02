@@ -1,4 +1,4 @@
-package com.android.thinkdecor.presentation.components
+package com.android.thinkdecor.presentation.auth.components
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -13,8 +13,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.thinkdecor.ui.theme.GrayText
-import com.android.thinkdecor.ui.theme.TealPrimary
+import com.android.thinkdecor.presentation.ui.theme.GrayText
+import com.android.thinkdecor.presentation.ui.theme.TealPrimary
 
 @Composable
 fun OTPTextField(

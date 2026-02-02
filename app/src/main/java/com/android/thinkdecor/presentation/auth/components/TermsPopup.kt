@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.thinkdecor.ui.theme.PrimaryGreen
-import com.android.thinkdecor.ui.theme.TitleColor
+import com.android.thinkdecor.presentation.ui.theme.PrimaryGreen
+import com.android.thinkdecor.presentation.ui.theme.TitleColor
 
 @Composable
 fun TermsPopup(

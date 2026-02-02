@@ -1,13 +1,11 @@
 package com.android.thinkdecor.presentation.auth.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,9 +26,9 @@ import com.android.thinkdecor.presentation.auth.components.FilledInput
 import com.android.thinkdecor.presentation.auth.components.PrimaryButton
 import com.android.thinkdecor.presentation.auth.components.SocialLoginButton
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
-import com.android.thinkdecor.ui.theme.HintColor
-import com.android.thinkdecor.ui.theme.PrimaryGreen
-import com.android.thinkdecor.ui.theme.TitleColor
+import com.android.thinkdecor.presentation.ui.theme.BlackText
+import com.android.thinkdecor.presentation.ui.theme.HintColor
+import com.android.thinkdecor.presentation.ui.theme.TitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,27 +43,33 @@ fun SignUpScreen(
 
     AuthScaffold(onBackClick = onBackClick) {
 
-        Spacer(Modifier.height(26.dp))
+        Spacer(Modifier.height(46.dp))
 
-        Text(
-            text = "Create Account",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = TitleColor
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Create Account",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = BlackText,
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(8.dp))
 
-        Text(
-            text = "Lorem ipsum dolor sit amet, consectetur",
-            fontSize = 14.sp,
-            color = HintColor
-        )
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur",
+                fontSize = 14.sp,
+                color = HintColor
+            )
+        }
 
         Spacer(Modifier.height(32.dp))
 
         // Full Name
-        Text("Full Name", fontSize = 14.sp, color = TitleColor)
+        Text("Full Name", fontSize = 14.sp, color = TitleColor, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(8.dp))
         FilledInput(
             value = fullName,
@@ -75,7 +80,7 @@ fun SignUpScreen(
         Spacer(Modifier.height(20.dp))
 
         // Email
-        Text("E-mail", fontSize = 14.sp, color = TitleColor)
+        Text("E-mail", fontSize = 14.sp, color = TitleColor, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(8.dp))
         FilledInput(
             value = email,

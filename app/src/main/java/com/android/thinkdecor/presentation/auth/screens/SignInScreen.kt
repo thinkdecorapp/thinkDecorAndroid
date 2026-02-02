@@ -1,28 +1,16 @@
 package com.android.thinkdecor.presentation.auth.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,10 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.android.thinkdecor.R
@@ -42,18 +33,20 @@ import com.android.thinkdecor.presentation.auth.components.FilledInput
 import com.android.thinkdecor.presentation.auth.components.PrimaryButton
 import com.android.thinkdecor.presentation.auth.components.SocialLoginButton
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
-import com.android.thinkdecor.ui.theme.DangerPink
-import com.android.thinkdecor.ui.theme.HintColor
-import com.android.thinkdecor.ui.theme.PrimaryGreen
-import com.android.thinkdecor.ui.theme.TitleColor
+import com.android.thinkdecor.presentation.ui.theme.BlackText
+import com.android.thinkdecor.presentation.ui.theme.DangerPink
+import com.android.thinkdecor.presentation.ui.theme.HintColor
+import com.android.thinkdecor.presentation.ui.theme.PrimaryGreen
+import com.android.thinkdecor.presentation.ui.theme.TitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
 fun SignInScreen(
     onSignUpClick: () -> Unit = {},
     onSignInClick: () -> Unit = {},
     onForgotPasswordClick: () -> Unit = {},
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -62,27 +55,33 @@ fun SignInScreen(
 
     AuthScaffold(onBackClick = onBackClick) {
 
-        Spacer(Modifier.height(26.dp))
+        Spacer(Modifier.height(46.dp))
 
-        Text(
-            text = "Let’s Sign you in",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = TitleColor
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Let’s Sign you in",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                color = BlackText
+            )
 
-        Spacer(Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
-            text = "Lorem ipsum dolor sit amet, consectetur",
-            fontSize = 14.sp,
-            color = HintColor
-        )
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur",
+                fontSize = 14.sp,
+                color = HintColor,
+                textAlign = TextAlign.Center
+            )
+        }
 
         Spacer(Modifier.height(32.dp))
 
         // Email
-        Text("Email Address", fontSize = 14.sp, color = TitleColor)
+        Text("Email Address", fontSize = 14.sp, color = TitleColor, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(8.dp))
         FilledInput(
             value = email,
@@ -93,7 +92,7 @@ fun SignInScreen(
         Spacer(Modifier.height(20.dp))
 
         // Password
-        Text("Password", fontSize = 14.sp, color = TitleColor)
+        Text("Password", fontSize = 14.sp, color = TitleColor, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(8.dp))
         FilledInput(
             value = password,
@@ -117,16 +116,17 @@ fun SignInScreen(
                     onCheckedChange = { rememberMe = it },
                     colors = CheckboxDefaults.colors(
                         checkedColor = PrimaryGreen
-                    )
+                    ),
                 )
-                Text("Remember Me", fontSize = 14.sp, color = HintColor)
+                Text("Remember Me", fontSize = 14.sp, color = HintColor, fontWeight = FontWeight.SemiBold)
             }
 
             Text(
                 text = "Forgot Password",
                 fontSize = 14.sp,
                 color = DangerPink,
-                modifier = Modifier.clickable { onForgotPasswordClick() }
+                modifier = Modifier.clickable { onForgotPasswordClick() },
+                fontWeight = FontWeight.SemiBold
             )
         }
 
@@ -151,7 +151,7 @@ fun SignInScreen(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Don’t have an account? ", color = HintColor)
+            Text("Don’t have an account? ", color = HintColor, fontWeight = FontWeight.SemiBold)
             Text(
                 "Sign Up",
                 color = PrimaryGreen,
@@ -159,11 +159,11 @@ fun SignInScreen(
             )
         }
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(30.dp))
 
         DividerWithText("Or Sign In with")
 
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(25.dp))
 
         Row(
             Modifier.fillMaxWidth(),
@@ -177,12 +177,30 @@ fun SignInScreen(
         Spacer(Modifier.height(24.dp))
 
         Text(
-            text = "By signing up you agree to our Terms\nand Conditions of Use",
-            fontSize = 12.sp,
+            text = buildAnnotatedString {
+                append("By signing up you agree to our ")
+
+                withStyle(
+                    style = SpanStyle(color = BlackText)
+                ) {
+                    append("Terms")
+                }
+
+                append("\nand ")
+
+                withStyle(
+                    style = SpanStyle(color = BlackText)
+                ) {
+                    append("Conditions of Use")
+                }
+            },
+            fontSize = 15.sp,
             color = HintColor,
+            fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
+
     }
 }
 

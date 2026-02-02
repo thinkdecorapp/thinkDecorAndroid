@@ -1,4 +1,4 @@
-package com.android.thinkdecor.presentation.components
+package com.android.thinkdecor.presentation.auth.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.thinkdecor.ui.theme.BlackText
-import com.android.thinkdecor.ui.theme.GrayText
-import com.android.thinkdecor.ui.theme.TealPrimary
+import com.android.thinkdecor.presentation.ui.theme.BlackText
+import com.android.thinkdecor.presentation.ui.theme.GrayText
+import com.android.thinkdecor.presentation.ui.theme.TealPrimary
 
 @Composable
 fun InterestChip(
