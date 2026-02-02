@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,10 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.android.thinkdecor.R
 import com.android.thinkdecor.presentation.ui.theme.PlaceholderGray
+import com.android.thinkdecor.presentation.ui.theme.Poppins
 import com.android.thinkdecor.presentation.ui.theme.SearchGreen
 
 @Composable
@@ -50,16 +50,18 @@ fun SearchBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Search,
+                    painterResource(R.drawable.ic_search),
                     contentDescription = "Search",
                     tint = SearchGreen,
                     modifier = Modifier
-                        .size(22.dp)
+                        .size(25.dp)
                         .padding(end = 12.dp)
                 )
                 Text(
                     text = "Chair, Lamp, Desk, Table etc",
                     color = PlaceholderGray,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
                 )
             }

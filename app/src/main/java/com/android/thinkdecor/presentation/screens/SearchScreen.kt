@@ -15,8 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -41,11 +41,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.android.thinkdecor.R
+import com.android.thinkdecor.presentation.ui.theme.Poppins
 
 @Composable
 fun SearchScreen(
-    onBackClick: () -> Unit = {},
-    onCartClick: () -> Unit = {}
+    onBackClick: () -> Unit = {}, onCartClick: () -> Unit = {}
 ) {
     var searchText by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -90,6 +90,8 @@ fun SearchScreen(
                     Text(
                         text = "Try \"Table\", \"Sofa\", \"Chair\"",
                         color = Color.Gray,
+                        fontFamily = Poppins,
+                        fontWeight = FontWeight.Normal,
                         fontSize = 14.sp
                     )
                 },
@@ -141,11 +143,8 @@ fun SearchScreen(
                     color = Color.Black
                 )
                 Text(
-                    text = "Clear",
-                    fontSize = 14.sp,
-                    color = Color(0xFF056D5E), // Green color
-                    modifier = Modifier.clickable { /* Clear recent searches */ }
-                )
+                    text = "Clear", fontSize = 14.sp, color = Color(0xFF056D5E), // Green color
+                    modifier = Modifier.clickable { /* Clear recent searches */ })
             }
 
             // Recent Search Items
@@ -171,15 +170,12 @@ fun SearchScreen(
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.clickable { /* See all */ }
-                ) {
+                    modifier = Modifier.clickable { /* See all */ }) {
                     Text(
-                        text = "See all",
-                        fontSize = 14.sp,
-                        color = Color.Gray
+                        text = "See all", fontSize = 14.sp, color = Color.Gray
                     )
                     Icon(
-                        imageVector = Icons.Default.ArrowForward,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = "See all",
                         tint = Color.Gray,
                         modifier = Modifier
@@ -204,8 +200,7 @@ fun SearchScreen(
 
 @Composable
 fun RecentSearchItem(
-    text: String,
-    onRemove: () -> Unit
+    text: String, onRemove: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -225,14 +220,11 @@ fun RecentSearchItem(
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = text,
-                fontSize = 14.sp,
-                color = Color.Black
+                text = text, fontSize = 14.sp, color = Color.Black
             )
         }
         IconButton(
-            onClick = onRemove,
-            modifier = Modifier.size(24.dp)
+            onClick = onRemove, modifier = Modifier.size(24.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
@@ -246,16 +238,13 @@ fun RecentSearchItem(
 
 @Composable
 fun ProductCard(
-    name: String,
-    brand: String,
-    price: String
+    name: String, brand: String, price: String
 ) {
     Column(
         modifier = Modifier
             .width(120.dp)
             .background(
-                color = Color(0xFFF5F5F5),
-                shape = RoundedCornerShape(12.dp)
+                color = Color(0xFFF5F5F5), shape = RoundedCornerShape(12.dp)
             )
             .padding(12.dp)
     ) {
@@ -265,35 +254,23 @@ fun ProductCard(
                 .fillMaxWidth()
                 .height(100.dp)
                 .background(
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(8.dp)
-                ),
-            contentAlignment = Alignment.Center
+                    color = Color.LightGray, shape = RoundedCornerShape(8.dp)
+                ), contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Image",
-                color = Color.Gray,
-                fontSize = 12.sp
+                text = "Image", color = Color.Gray, fontSize = 12.sp
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = name,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Black
+            text = name, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color.Black
         )
         Text(
-            text = brand,
-            fontSize = 12.sp,
-            color = Color.Gray
+            text = brand, fontSize = 12.sp, color = Color.Gray
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = price,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
+            text = price, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.Black
         )
     }
 }
