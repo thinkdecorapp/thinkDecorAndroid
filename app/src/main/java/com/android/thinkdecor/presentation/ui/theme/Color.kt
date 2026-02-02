@@ -22,3 +22,10 @@ val FieldBg = Color(0xFFF6F6F6)
 val BorderColor = Color(0xFFE5E7EB)
 val PrimaryGreen = Color(0xFF065F46)
 val DangerPink = Color(0xFFF43F5E)
+
+// Search & UI
+val SearchGreen = Color(0xFF056D5E)
+val PlaceholderGray = Color(0xFF9E9E9E)
+val TileBgGray = Color(0xFFF5F5F5)
+val SelectedBorderBlue = Color(0xFF2196F3)
+val TileTitleColor = Color(0xFF121212)

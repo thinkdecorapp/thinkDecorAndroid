@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.android.thinkdecor.presentation.home.FurnitureEssentialsSection
 import com.android.thinkdecor.presentation.home.HomeScreenDetails
 import com.android.thinkdecor.presentation.home.SearchBar
 
@@ -28,6 +29,8 @@ fun HomeScreen() {
             SearchBar(
                 onSearchClick = { showSearchScreen = true }
             )
+            FurnitureEssentialsSection()
+            PopularSection()
         }
     }
 }
