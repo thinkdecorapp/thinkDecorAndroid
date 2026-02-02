@@ -1,4 +1,4 @@
-package com.android.thinkdecor.presentation.components
+package com.android.thinkdecor.presentation.auth.components
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width

@@ -14,11 +14,14 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.android.thinkdecor.presentation.ui.theme.FieldBg
 import com.android.thinkdecor.presentation.ui.theme.HintColor
+
 
 @Composable
 fun FilledInput(
@@ -32,7 +35,7 @@ fun FilledInput(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = { Text(placeholder, color = HintColor) },
+        placeholder = { Text(placeholder, color = HintColor, fontWeight = FontWeight.SemiBold) },
         singleLine = true,
         visualTransformation =
             if (isPassword && !passwordVisible) PasswordVisualTransformation()

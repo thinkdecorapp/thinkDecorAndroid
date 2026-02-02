@@ -1,5 +1,6 @@
 package com.android.thinkdecor.presentation.navigation
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,6 @@ fun NavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-
         // Sign In Screen
         composable(route = Routes.SignIn.route) {
             SignInScreen(
@@ -168,10 +168,16 @@ fun NavGraph(
         composable(route = Routes.ChooseInterests.route) {
             ChooseInterestsScreen(
                 onFinishClick = {
-                    // Navigate to home
+                    Toast.makeText(
+                        navController.context,
+                        "Interests saved successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 },
                 onBackClick = {
-                    navController.popBackStack()
+                    navController.navigate(Routes.SignIn.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             )
         }

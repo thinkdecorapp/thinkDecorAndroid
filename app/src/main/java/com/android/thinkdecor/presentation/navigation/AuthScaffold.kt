@@ -1,6 +1,7 @@
 package com.android.thinkdecor.presentation.navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,24 +28,27 @@ fun AuthScaffold(
     onBackClick: () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            if (showBack) {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
+    Scaffold(topBar = {
+        if (showBack) {
+            TopAppBar(
+                title = {},
+                navigationIcon = {
+                    Box(
+                        modifier = Modifier.padding(top = 40.dp, start = 20.dp)
+                    ) {
                         IconButton(onClick = onBackClick) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                tint = Color(0xFF171725),
                                 contentDescription = null
                             )
                         }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFEFEFE))
-                )
-            }
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFEFEFE))
+            )
         }
-    ) { innerPadding ->
+    }) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

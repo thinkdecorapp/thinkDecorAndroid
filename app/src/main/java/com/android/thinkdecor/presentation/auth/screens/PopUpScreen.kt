@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.thinkdecor.presentation.components.OTPTextField
+import com.android.thinkdecor.presentation.auth.components.OTPTextField
 import com.android.thinkdecor.presentation.ui.theme.BlackText
 import com.android.thinkdecor.presentation.ui.theme.GrayText
 import com.android.thinkdecor.presentation.ui.theme.TealPrimary

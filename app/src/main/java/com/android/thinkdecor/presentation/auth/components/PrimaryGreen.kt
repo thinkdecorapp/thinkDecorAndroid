@@ -38,7 +38,7 @@ fun PrimaryButton(
         Text(
             text = text,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

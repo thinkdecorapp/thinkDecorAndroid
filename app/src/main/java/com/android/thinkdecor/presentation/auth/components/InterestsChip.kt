@@ -1,4 +1,4 @@
-package com.android.thinkdecor.presentation.components
+package com.android.thinkdecor.presentation.auth.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
