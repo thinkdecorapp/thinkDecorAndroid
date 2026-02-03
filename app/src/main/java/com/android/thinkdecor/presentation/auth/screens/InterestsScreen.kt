@@ -33,6 +33,8 @@ fun ChooseInterestsScreen(
     onFinishClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
+    var searchQuery by remember { mutableStateOf("") }
+
     val interests = listOf(
         "Dining Table", "Working Table",
         "Chairs", "Wardrobes",
@@ -40,6 +42,16 @@ fun ChooseInterestsScreen(
         "Personal Development", "Sofa",
         "Side Table"
     )
+
+    val filteredInterests = remember(searchQuery) {
+        if (searchQuery.isBlank()) {
+            interests
+        } else {
+            interests.filter {
+                it.contains(searchQuery, ignoreCase = true)
+            }
+        }
+    }
 
     var selected by remember { mutableStateOf(setOf<String>()) }
 
@@ -71,15 +83,15 @@ fun ChooseInterestsScreen(
         Spacer(Modifier.height(20.dp))
 
         FilledInput(
-            value = "",
+            value = searchQuery,
             placeholder = "Search...",
-            onValueChange = {}
+            onValueChange = { searchQuery = it }
         )
 
         Spacer(Modifier.height(20.dp))
 
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            interests.chunked(2).forEach { row ->
+            filteredInterests.chunked(2).forEach { row ->
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxWidth()

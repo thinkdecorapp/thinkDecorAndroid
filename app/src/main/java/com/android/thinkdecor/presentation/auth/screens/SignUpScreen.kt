@@ -25,6 +25,7 @@ import com.android.thinkdecor.presentation.auth.components.DividerWithText
 import com.android.thinkdecor.presentation.auth.components.FilledInput
 import com.android.thinkdecor.presentation.auth.components.PrimaryButton
 import com.android.thinkdecor.presentation.auth.components.SocialLoginButton
+import com.android.thinkdecor.presentation.auth.utils.isValidEmail
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
 import com.android.thinkdecor.presentation.ui.theme.BlackText
 import com.android.thinkdecor.presentation.ui.theme.HintColor
@@ -104,18 +105,15 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(28.dp))
 
-        if (fullName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-            PrimaryButton(
-                "Create An Account",
-                onClick = { onSignUpClick(email) }
-            )
-        }else{
-            PrimaryButton(
-                "Create An Account",
-                onClick = {},
-                enabled = false
-            )
-        }
+        val isEmailValid = isValidEmail(email)
+
+        PrimaryButton(
+            "Create An Account",
+            enabled = fullName.isNotEmpty() &&
+                    isEmailValid &&
+                    password.isNotEmpty(),
+            onClick = { onSignUpClick(email) }
+        )
 
         Spacer(Modifier.height(24.dp))
 
