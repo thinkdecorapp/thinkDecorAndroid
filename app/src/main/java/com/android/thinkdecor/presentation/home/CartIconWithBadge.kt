@@ -20,8 +20,7 @@ import com.android.thinkdecor.R
 fun CartIconWithBadge(
     count: Int,
     onClick: () -> Unit
-) {
-
+) {  
     Box {
         IconButton(
             onClick = onClick
