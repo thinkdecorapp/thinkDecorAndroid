@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,17 +19,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.thinkdecor.presentation.auth.components.OTPDigit
-import com.android.thinkdecor.presentation.auth.components.OTPTextField
 import com.android.thinkdecor.presentation.auth.components.PrimaryButton
 import com.android.thinkdecor.presentation.auth.utils.isOtpValid
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
@@ -52,6 +48,12 @@ fun EnterOTPScreen(
 
     val otpComplete = isOtpValid(otp.joinToString(""))
 
+    val focusRequesters = remember { List(4) { FocusRequester() } }
+
+    LaunchedEffect(Unit) {
+        focusRequesters[0].requestFocus()
+    }
+
     AuthScaffold(onBackClick = onBackClick) {
 
         Spacer(Modifier.height(46.dp))
@@ -60,7 +62,6 @@ fun EnterOTPScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = "Enter OTP",
                 style = MaterialTheme.typography.titleLarge,
@@ -74,10 +75,7 @@ fun EnterOTPScreen(
             Text(
                 text = buildAnnotatedString {
                     append("We have just sent you 4 digit code via your\nemail ")
-
-                    withStyle(
-                        style = SpanStyle(color = BlackText)
-                    ) {
+                    withStyle(style = SpanStyle(color = BlackText)) {
                         append(email)
                     }
                 },
@@ -98,9 +96,18 @@ fun EnterOTPScreen(
                     value = otp[index],
                     onValueChange = { value ->
                         if (value.length <= 1) {
-                            otp = otp.toMutableList().apply { this[index] = value }
+                            otp = otp.toMutableList().apply {
+                                this[index] = value
+                            }
+
+                            if (value.isNotEmpty() && index < 3) {
+                                focusRequesters[index + 1].requestFocus()
+                            } else if (value.isEmpty() && index > 0) {
+                                focusRequesters[index - 1].requestFocus()
+                            }
                         }
                     },
+                    focusRequester = focusRequesters[index]
                 )
             }
         }
@@ -110,9 +117,7 @@ fun EnterOTPScreen(
         PrimaryButton(
             text = "Continue",
             enabled = otpComplete,
-            onClick = {
-                onContinueClick()
-            }
+            onClick = { onContinueClick() }
         )
 
         Spacer(Modifier.height(20.dp))
@@ -138,5 +143,4 @@ fun EnterOTPScreen(
         }
     }
 }
-
 
