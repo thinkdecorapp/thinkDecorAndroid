@@ -12,7 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val TealPrimary = Color(0xFF006B5F)
 val TealLight = Color(0xFF00897B)
-val GrayLight = Color(0xFFF5F5F5)
+val GrayLight = Color(0xFFEFEFEF)
 val GrayText = Color(0xFF757171)
 val BlackText = Color(0xFF171725)
 
@@ -20,7 +20,7 @@ val TitleColor = Color(0xFF78828A)
 val HintColor = Color(0xFF9CA4AB)
 val FieldBg = Color(0xFFF6F6F6)
 val BorderColor = Color(0xFFE5E7EB)
-val PrimaryGreen = Color(0xFF065F46)
+val PrimaryGreen = Color(0xFF00594E)
 val DangerPink = Color(0xFFF43F5E)
 
 // Search & UI
