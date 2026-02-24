@@ -2,6 +2,16 @@ package com.android.thinkdecor.presentation.navigation
 
 sealed class Routes(val route: String) {
 
+    // Onboarding Routes
+
+    object Splash : Routes("splash")
+
+    object Onboarding1 : Routes("onboarding1")
+
+    object Onboarding2 : Routes("onboarding2")
+
+    object Onboarding3 : Routes("onboarding3")
+
     // Authentication Routes
     object SignIn : Routes("sign_in")
     object SignUp : Routes("sign_up")
