@@ -20,17 +20,61 @@ import com.android.thinkdecor.presentation.auth.screens.PopUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SignInScreen
 import com.android.thinkdecor.presentation.auth.screens.SignUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SuccessPopup
+import com.android.thinkdecor.presentation.onboarding.screens.OnboardingScreen1
+import com.android.thinkdecor.presentation.onboarding.screens.OnboardingScreen2
+import com.android.thinkdecor.presentation.onboarding.screens.OnboardingScreen3
+import com.android.thinkdecor.presentation.onboarding.screens.SplashScreen
 
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String = Routes.SignIn.route,
+    startDestination: String = Routes.Splash.route,
     onSignInSuccess: () -> Unit = {}
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+
+        composable(route = Routes.Splash.route) {
+            SplashScreen(
+                onSplashComplete = {
+                    navController.navigate(Routes.Onboarding1.route) {
+                        popUpTo(Routes.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = Routes.Onboarding1.route) {
+            OnboardingScreen1(
+                onContinue = {
+                    navController.navigate(Routes.Onboarding2.route)
+                }
+            )
+        }
+
+        composable(route = Routes.Onboarding2.route) {
+            OnboardingScreen2(
+                onContinue = {
+                    navController.navigate(Routes.Onboarding3.route)
+                }
+            )
+        }
+
+        composable(route = Routes.Onboarding3.route) {
+            OnboardingScreen3(
+                onContinue = {
+                    navController.navigate(Routes.SignIn.route) {
+                        popUpTo(Routes.Splash.route) { inclusive = true }
+                    }
+                },
+                onSignUpClick = {
+                    navController.navigate(Routes.SignUp.route)
+                }
+            )
+        }
+
         // Sign In Screen
         composable(route = Routes.SignIn.route) {
             SignInScreen(
