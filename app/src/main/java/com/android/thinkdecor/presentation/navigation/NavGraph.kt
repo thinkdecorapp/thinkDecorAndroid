@@ -2,6 +2,7 @@ package com.android.thinkdecor.presentation.navigation
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,25 +13,54 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
-import com.android.thinkdecor.presentation.auth.screens.EnterOTPScreen
-import com.android.thinkdecor.presentation.auth.screens.ForgotPasswordScreen
 import com.android.thinkdecor.presentation.auth.screens.ChooseInterestsScreen
 import com.android.thinkdecor.presentation.auth.screens.CreateNewPasswordScreen
+import com.android.thinkdecor.presentation.auth.screens.EnterOTPScreen
+import com.android.thinkdecor.presentation.auth.screens.ForgotPasswordScreen
 import com.android.thinkdecor.presentation.auth.screens.PopUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SignInScreen
 import com.android.thinkdecor.presentation.auth.screens.SignUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SuccessPopup
+import com.android.thinkdecor.presentation.onboarding.screens.OnboardingCarouselScreen
+import com.android.thinkdecor.presentation.onboarding.screens.SplashScreen
+import kotlinx.coroutines.delay
 
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String = Routes.SignIn.route,
+    startDestination: String = Routes.Splash.route,
     onSignInSuccess: () -> Unit = {}
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+        composable(route = Routes.Splash.route) {
+            SplashScreen(
+                onSplashComplete = {
+                    LaunchedEffect(Unit) {
+                        delay(1500)
+                        navController.navigate(Routes.Onboarding.route) {
+                            popUpTo(Routes.Splash.route) { inclusive = true }
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(Routes.Onboarding.route) {
+            OnboardingCarouselScreen(
+                onFinished = {
+                    navController.navigate(Routes.SignIn.route) {
+                        popUpTo(Routes.Splash.route) { inclusive = true }
+                    }
+                },
+                onSignUpClick = {
+                    navController.navigate(Routes.SignUp.route)
+                }
+            )
+        }
+
         // Sign In Screen
         composable(route = Routes.SignIn.route) {
             SignInScreen(
@@ -44,7 +74,7 @@ fun NavGraph(
                     navController.navigate(Routes.ForgotPassword.route)
                 },
                 onBackClick = {
-                    // go back to onboarding to let user choose if he's a business or customer
+                    navController.popBackStack()
                 }
             )
         }

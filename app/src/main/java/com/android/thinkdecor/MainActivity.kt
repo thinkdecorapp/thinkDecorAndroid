@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
             ThinkDecorTheme {
                 NavGraph(
                     navController = rememberNavController(),
-                    startDestination = Routes.SignIn.route,
+                    startDestination = Routes.Splash.route,
                     onSignInSuccess = {
                         val intent = Intent(this@MainActivity, DashboardActivity::class.java)
                         startActivity(intent)
