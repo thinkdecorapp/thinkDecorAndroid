@@ -40,40 +40,24 @@ import androidx.compose.ui.unit.sp
 import com.android.thinkdecor.R
 import kotlinx.coroutines.delay
 
-// ─── Brand Colors ────────────────────────────────────────────────────────────
 private val TealDark   = Color(0xFF004D45)
 private val TealMid    = Color(0xFF00695C)
 private val TealLight  = Color(0xFF00897B)
 private val TealAccent = Color(0xFF26A69A)
 private val White      = Color(0xFFFFFFFF)
 
-// ─── Splash Screen ───────────────────────────────────────────────────────────
 @Composable
 fun SplashScreen(
-    onSplashComplete: () -> Unit = {}
+    onSplashComplete: @Composable () -> Unit = {}
 ) {
-    LaunchedEffect(Unit) {
-        delay(1500)
-        onSplashComplete()
-    }
 
-    // Logo entrance animation
-    val logoAlpha by rememberInfiniteTransition(label = "logo").animateFloat(
-        initialValue = 0f,
-        targetValue  = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 0),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "alpha"
-    )
+    onSplashComplete()
 
     val logoScale = remember { Animatable(0.6f) }
     val contentAlpha = remember { Animatable(0f) }
     val loaderProgress = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
-        // Logo pop-in
         logoScale.animateTo(
             targetValue = 1f,
             animationSpec = spring(
@@ -103,14 +87,13 @@ fun SplashScreen(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // Decorative background circles
+
         DecorativeCircles()
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // ── Logo Mark ────────────────────────────────────────────────────
             Box(
                 modifier = Modifier
                     .size(120.dp)
@@ -126,8 +109,8 @@ fun SplashScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text     = "Dream Decor",
-                color    = White.copy(alpha = contentAlpha.value),
+                text = "Dream Decor",
+                color = White.copy(alpha = contentAlpha.value),
                 fontSize = 20.sp,
                 fontWeight  = FontWeight.Light,
                 letterSpacing = 6.sp,
@@ -137,7 +120,10 @@ fun SplashScreen(
             Spacer(modifier = Modifier.height(56.dp))
 
             CircularProgressIndicator(
-                strokeWidth = 4.dp
+                modifier = Modifier.size(36.dp),
+                strokeWidth = 4.dp,
+                color = Color.White,
+                trackColor = Color.Transparent
             )
         }
     }

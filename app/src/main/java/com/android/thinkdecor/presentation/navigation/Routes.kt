@@ -6,11 +6,7 @@ sealed class Routes(val route: String) {
 
     object Splash : Routes("splash")
 
-    object Onboarding1 : Routes("onboarding1")
-
-    object Onboarding2 : Routes("onboarding2")
-
-    object Onboarding3 : Routes("onboarding3")
+    object Onboarding : Routes("onboarding")
 
     // Authentication Routes
     object SignIn : Routes("sign_in")
