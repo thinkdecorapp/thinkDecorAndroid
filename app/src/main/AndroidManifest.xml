@@ -11,26 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ThinkDecor">
 
-<!--        <activity-->
-<!--            android:name=".presentation.dashboard.DashboardActivity"-->
-<!--            android:exported="true"-->
-<!--            android:theme="@style/Theme.ThinkDecor">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <activity
+            android:name=".presentation.cart.CartActivity"
+            android:exported="false"
+            android:label="@string/title_activity_cart"
+            android:theme="@style/Theme.ThinkDecor" />
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ThinkDecor">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".presentation.dashboard.DashboardActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ThinkDecor" />
     </application>
 </manifest>

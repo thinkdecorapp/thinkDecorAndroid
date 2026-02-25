@@ -1,4 +1,4 @@
-package com.android.thinkdecor.presentation
+package com.android.thinkdecor
 
 import android.content.Intent
 import android.os.Bundle
