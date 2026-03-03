@@ -7,5 +7,5 @@ package com.android.thinkdecor.data.remote
 sealed class ApiResponse<out T> {
     data class Success<T>(val data: T) : ApiResponse<T>()
     data class Error(val message: String, val code: Int? = null) : ApiResponse<Nothing>()
-    data class Failure(val throwable: Throwable) : ApiResponse<Nothing>()
+    data object Loading : ApiResponse<Nothing>()
 }

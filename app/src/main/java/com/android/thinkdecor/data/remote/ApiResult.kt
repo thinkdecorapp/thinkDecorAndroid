@@ -10,18 +10,6 @@ import java.net.UnknownHostException
 /**
  * Wraps an API call in a try-catch and returns [ApiResponse].
  * Use this for all API calls to ensure consistent error handling.
- *
- * Usage:
- * ```
- * val result = safeApiCall {
- *     api.getProducts()
- * }
- * when (result) {
- *     is ApiResponse.Success -> // handle data
- *     is ApiResponse.Error -> // handle error message
- *     is ApiResponse.Failure -> // handle exception
- * }
- * ```
  */
 suspend fun <T> safeApiCall(
     apiCall: suspend () -> T
@@ -43,7 +31,7 @@ suspend fun <T> safeApiCall(
     } catch (e: IOException) {
         ApiResponse.Error(message = "Network error: ${e.message}", code = null)
     } catch (e: Exception) {
-        ApiResponse.Failure(e)
+        ApiResponse.Error(message = e.message ?: "Unknown error", code = null)
     }
 }
 

@@ -1,5 +1,8 @@
 package com.android.thinkdecor.data.remote
 
+import com.android.thinkdecor.data.remote.dto.AuthResponse
+import com.android.thinkdecor.data.remote.dto.LoginRequest
+import com.android.thinkdecor.data.remote.dto.SignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -11,25 +14,3 @@ interface AuthApi {
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): AuthResponse
 }
-
-data class SignUpRequest(
-    val fullName: String,
-    val email: String,
-    val password: String
-)
-
-data class LoginRequest(
-    val email: String,
-    val password: String
-)
-
-data class AuthResponse(
-    val token: String,
-    val user: UserDto
-)
-
-data class UserDto(
-    val id: String,
-    val email: String,
-    val fullName: String
-)
