@@ -21,8 +21,17 @@ import com.android.thinkdecor.presentation.auth.screens.PopUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SignInScreen
 import com.android.thinkdecor.presentation.auth.screens.SignUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SuccessPopup
+import com.android.thinkdecor.presentation.chat.mockData.FakeConversations
+import com.android.thinkdecor.presentation.chat.mockData.FakeMessages.mockChatMessages
+import com.android.thinkdecor.presentation.chat.screens.ChatScreen
+import com.android.thinkdecor.presentation.chat.screens.ConversationsScreen
+import com.android.thinkdecor.presentation.dashboard.DashboardUIDesign
 import com.android.thinkdecor.presentation.onboarding.screens.OnboardingCarouselScreen
 import com.android.thinkdecor.presentation.onboarding.screens.SplashScreen
+import com.android.thinkdecor.presentation.screens.ExploreScreen
+import com.android.thinkdecor.presentation.screens.HomeScreen
+import com.android.thinkdecor.presentation.screens.ProfileScreen
+import com.android.thinkdecor.presentation.screens.ScanScreen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -203,6 +212,10 @@ fun NavGraph(
                         "Interests saved successfully",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    navController.navigate(Routes.Dashboard.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 },
                 onBackClick = {
                     navController.navigate(Routes.SignIn.route) {
@@ -228,5 +241,62 @@ fun NavGraph(
                 )
             }
         }
+
+        composable(
+            route = Routes.Dashboard.route
+        ) {
+            DashboardUIDesign(parentNavController = navController)
+        }
+
+        composable(route = Routes.Home.route) {
+            HomeScreen()
+        }
+
+        composable(
+            route = Routes.Explore.route
+        ) {
+            ExploreScreen()
+        }
+
+        composable(
+            route = Routes.Scan.route
+        ) {
+            ScanScreen()
+        }
+
+        composable(route = Routes.Conversations.route) {
+            ConversationsScreen(
+                items = FakeConversations.mockConversations,
+                onOpenChat = { conversation ->
+                    navController.navigate(
+                        Routes.Chat.createRoute(conversation.id)
+                    )
+                }
+            )
+        }
+
+        composable(
+            route = Routes.Chat.route,
+            arguments = listOf(
+                navArgument(Routes.ARG_CHAT_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val chatId = backStackEntry.arguments?.getString(Routes.ARG_CHAT_ID) ?: ""
+            val user = FakeConversations.mockConversations.find { it.id == chatId }
+            ChatScreen(
+                userName = user?.name ?: "Unknown",
+                messages = mockChatMessages,
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = Routes.Profile.route
+        ) {
+            ProfileScreen()
+        }
+
     }
 }

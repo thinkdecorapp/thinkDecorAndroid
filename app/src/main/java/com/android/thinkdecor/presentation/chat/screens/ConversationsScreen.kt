@@ -1,7 +1,7 @@
 package com.android.thinkdecor.presentation.chat.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,13 +16,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,71 +32,67 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.android.thinkdecor.presentation.auth.components.FilledInput
-import com.android.thinkdecor.presentation.chat.components.ConversationRow
-import com.android.thinkdecor.presentation.chat.mockData.FakeConversations.mockConversations
+import coil.compose.AsyncImage
+import com.android.thinkdecor.presentation.chat.mockData.FakeConversations
 import com.android.thinkdecor.presentation.chat.models.UiConversation
-import com.android.thinkdecor.R
-import com.android.thinkdecor.presentation.navigation.AuthScaffold
-import com.android.thinkdecor.presentation.ui.theme.HintColor
+import kotlin.random.Random
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 fun ConversationsScreen(
-    items: List<UiConversation> = listOf(
-        UiConversation("Victoria Avila", "That’s great, I look forward to hearing ba...", "11:20 am", 1, Color(0xFFB7D7C2)),
-        UiConversation("Fitted - Tech & Design", "Thecla: @ovo How is it going?", "11:11 am", 0, Color(0xFF0F6B5F)),
-        UiConversation("Demola Andreas", "Job Description.docx", "Yesterday", 1, Color(0xFF8FAADC)),
-        UiConversation("Ibi Cookey", "How is it going?", "Yesterday", 0, Color(0xFFFFCDD2)),
-        UiConversation("Thecla Ezenwa", "Please drop your morning update.", "Yesterday", 1, Color(0xFFFFE0B2)),
-        UiConversation("Tobi Ozenua", "Aight, noted.", "Yesterday", 1, Color(0xFFD1C4E9)),
-        UiConversation("Busola Ajala", "Aight, noted", "Yesterday", 1, Color(0xFFBBDEFB))
-    ),
-    onOpenChat: (UiConversation) -> Unit = {}
+    items: List<UiConversation> = FakeConversations.mockConversations,
+    onOpenChat: (UiConversation) -> Unit = {},
 ) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color(0xFFF7F8FA)
+    ) { paddingValues ->
 
-    Spacer(Modifier.height(46.dp))
-    Column(
-        modifier = Modifier
-            .background(Color.White)
-    ) {
-        Spacer(Modifier.height(24.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Conversations",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.newchat),
-                contentDescription = null,
-                modifier = Modifier.padding(horizontal = 20.dp).size(20.dp)
-            )
+        var search by remember { mutableStateOf("") }
+
+        val filteredItems = remember(search, items) {
+            if (search.isBlank()) items
+            else items.filter { conversation ->
+                conversation.name.contains(search, ignoreCase = true) ||
+                        conversation.lastMessage.contains(search, ignoreCase = true)
+            }
         }
 
-        Spacer(Modifier.height(12.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
 
-        HorizontalDivider(
-            thickness = 0.5.dp
-        )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Conversations",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = (-0.3).sp,
+                    color = Color.Black
+                )
+            }
 
-        Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(16.dp))
 
-        Box(modifier = Modifier.padding(horizontal = 16.dp)) {
+            HorizontalDivider(thickness = 0.5.dp, color = Color(0xFFEAEAEA))
 
-            var search by remember { mutableStateOf("") }
+            Spacer(Modifier.height(16.dp))
 
             ConversationSearchBar(
                 value = search,
@@ -103,18 +100,105 @@ fun ConversationsScreen(
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
+            Spacer(Modifier.height(12.dp))
+
+            if (filteredItems.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No conversations found",
+                        color = Color(0xFF9E9E9E),
+                        fontSize = 14.sp
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(bottom = 16.dp)
+                ) {
+                    items(
+                        items = filteredItems,
+                        key = { it.name }
+                    ) { item ->
+                        ConversationRow(
+                            item    = item,
+                            onClick = { onOpenChat(item) }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ConversationRow(
+    item: UiConversation,
+    onClick: () -> Unit
+) {
+    val randomImageUrl = remember {
+        "https://picsum.photos/200?random=${Random.nextInt(1, 1000)}"
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncImage(
+            model              = randomImageUrl,
+            contentDescription = null,
+            modifier           = Modifier.size(48.dp).clip(CircleShape),
+            contentScale       = ContentScale.Crop
+        )
+
+        Spacer(Modifier.width(12.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Row(
+                modifier              = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text       = item.name,
+                    fontSize   = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color      = Color.Black
+                )
+                Text(
+                    text     = item.time,
+                    fontSize = 12.sp,
+                    color    = Color(0xFF9E9E9E)
+                )
+            }
+
+            Spacer(Modifier.height(4.dp))
+
+            Text(
+                text     = item.lastMessage,
+                fontSize = 14.sp,
+                color    = Color(0xFF6E6E6E),
+                maxLines = 1
+            )
         }
 
-        Spacer(Modifier.height(8.dp))
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 8.dp)
-        ) {
-            items(items) { item ->
-                ConversationRow(
-                    item = item,
-                    onClick = { onOpenChat(item) }
+        if (item.unreadCount > 0) {
+            Spacer(Modifier.width(8.dp))
+            Box(
+                modifier        = Modifier.size(20.dp).background(Color(0xFF0F6B5F), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text       = item.unreadCount.toString(),
+                    fontSize   = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color      = Color.White
                 )
             }
         }
@@ -130,35 +214,28 @@ fun ConversationSearchBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(44.dp)
-            .background(Color(0xFFF7F7FC), RoundedCornerShape(12.dp))
-            .padding(horizontal = 7.dp),
+            .height(48.dp)
+            .background(Color(0xFFF1F3F6), RoundedCornerShape(12.dp))
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = Icons.Default.Search,
-            contentDescription = "Search",
-            tint = HintColor
+            contentDescription = null,
+            tint = Color(0xFF9E9E9E)
         )
 
         Spacer(Modifier.width(8.dp))
 
         BasicTextField(
-            value = value,
+            value         = value,
             onValueChange = onValueChange,
-            singleLine = true,
-            textStyle = TextStyle(
-                fontSize = 14.sp,
-                color = Color.Black
-            ),
-            modifier = Modifier.fillMaxWidth(),
+            singleLine    = true,
+            textStyle     = TextStyle(fontSize = 14.sp, color = Color.Black),
+            modifier      = Modifier.fillMaxWidth(),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
-                    Text(
-                        text = "Search",
-                        color = HintColor,
-                        fontSize = 14.sp
-                    )
+                    Text(text = "Search", color = Color(0xFF9E9E9E), fontSize = 14.sp)
                 }
                 innerTextField()
             }

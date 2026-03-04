@@ -10,14 +10,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.ChatBubbleOutline
+import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
@@ -38,52 +38,78 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.android.thinkdecor.R
+import com.android.thinkdecor.presentation.chat.mockData.FakeConversations
+import com.android.thinkdecor.presentation.chat.screens.ConversationsScreen
+import com.android.thinkdecor.presentation.navigation.Routes
 import com.android.thinkdecor.presentation.screens.ExploreScreen
 import com.android.thinkdecor.presentation.screens.HomeScreen
-import com.android.thinkdecor.presentation.screens.InboxScreen
 import com.android.thinkdecor.presentation.screens.ProfileScreen
 import com.android.thinkdecor.presentation.screens.ScanScreen
 
 @Composable
-fun DashboardUIDesign() {
-    var selectedTab by remember { mutableIntStateOf(0) }
+fun DashboardUIDesign(
+    parentNavController: NavHostController
+) {
+    val navController = rememberNavController()
 
     Scaffold(
         bottomBar = {
-            CustomBottomNavigation(
-                selectedTab = selectedTab, onTabSelected = { selectedTab = it })
-        }, containerColor = Color(0xFFF9F9F9) // Light background as seen in screenshot
+            CustomBottomNavigation(navController = navController)
+        },
+        containerColor = Color(0xFFF9F9F9)
     ) { paddingValues ->
-        Column(
+
+        NavHost(
+            navController = navController,
+            startDestination = "home",
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
+                .navigationBarsPadding()
         ) {
-            when (selectedTab) {
-                0 -> HomeScreen()
-                1 -> ExploreScreen()
-                2 -> ScanScreen()
-                3 -> InboxScreen()
-                4 -> ProfileScreen()
-                else -> HomeScreen()
+
+            composable(Routes.Home.route) { HomeScreen() }
+
+            composable(Routes.Explore.route) { ExploreScreen() }
+
+            composable(Routes.Scan.route) { ScanScreen() }
+
+            composable(Routes.Conversations.route) {
+                ConversationsScreen(
+                    items = FakeConversations.mockConversations,
+                    onOpenChat = { conversation ->
+                        parentNavController.navigate(
+                            Routes.Chat.createRoute(conversation.id)
+                        )
+                    }
+                )
             }
+
+            composable(Routes.Profile.route) { ProfileScreen() }
         }
     }
 }
 
 @Composable
 fun CustomBottomNavigation(
-    selectedTab: Int, onTabSelected: (Int) -> Unit
+    navController: NavHostController
 ) {
+    val currentRoute =
+        navController.currentBackStackEntryAsState().value?.destination?.route
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp) // Total height to accommodate the FAB overflow
+            .height(90.dp)
             .background(Color.Transparent)
     ) {
-        // Main Navigation Bar Container
+
         Surface(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -92,56 +118,77 @@ fun CustomBottomNavigation(
             color = Color.White,
             shadowElevation = 8.dp
         ) {
+
             Row(
                 modifier = Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                // Home
+
                 BottomNavItem(
                     icon = Icons.Outlined.Home,
                     label = "Home",
-                    isSelected = selectedTab == 0,
-                    onClick = { onTabSelected(0) })
+                    isSelected = currentRoute == Routes.Home.route,
+                    onClick = {
+                        navController.navigate(Routes.Home.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    }
+                )
 
-                // Explore
                 BottomNavItem(
-                    icon = Icons.Outlined.Home,
+                    icon = Icons.Outlined.Explore,
                     label = "Explore",
-                    isSelected = selectedTab == 1,
-                    onClick = { onTabSelected(1) })
+                    isSelected = currentRoute == Routes.Explore.route,
+                    onClick = {
+                        navController.navigate(Routes.Explore.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    }
+                )
 
-                // Space for the central FAB
                 Spacer(modifier = Modifier.width(60.dp))
 
-                // Inbox
                 BottomNavItem(
-                    icon = Icons.Outlined.FavoriteBorder,
-                    label = "Inbox",
-                    isSelected = selectedTab == 3,
-                    onClick = { onTabSelected(3) })
+                    icon = Icons.Outlined.ChatBubbleOutline,
+                    label = "Chat",
+                    isSelected = currentRoute == Routes.Conversations.route,
+                    onClick = {
+                        navController.navigate(Routes.Conversations.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    }
+                )
 
-                // Profile
                 BottomNavItem(
                     icon = Icons.Outlined.Person,
                     label = "Profile",
-                    isSelected = selectedTab == 4,
-                    onClick = { onTabSelected(4) })
+                    isSelected = currentRoute == Routes.Profile.route,
+                    onClick = {
+                        navController.navigate(Routes.Profile.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
         }
 
-        // Floating Center Button with scan icon
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .clip(CircleShape)
-                .clickable { onTabSelected(2) }, contentAlignment = Alignment.Center
+                .clickable { navController.navigate(Routes.Scan.route) },
+            contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_scan),
                 contentDescription = "Scan",
                 modifier = Modifier.size(140.dp),
-                tint = Color.Unspecified // Use original colors from the drawable
+                tint = Color.Unspecified
             )
         }
     }
