@@ -1,5 +1,6 @@
 package com.android.thinkdecor.presentation.auth.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,13 +30,15 @@ import com.android.thinkdecor.presentation.auth.utils.isValidEmail
 import com.android.thinkdecor.presentation.navigation.AuthScaffold
 import com.android.thinkdecor.presentation.ui.theme.BlackText
 import com.android.thinkdecor.presentation.ui.theme.HintColor
+import com.android.thinkdecor.presentation.ui.theme.PrimaryGreen
 import com.android.thinkdecor.presentation.ui.theme.TitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     onBackClick: () -> Unit = {},
-    onSignUpClick: (String) -> Unit = {}
+    onSignUpClick: (String) -> Unit = {},
+    onSignInClick: () -> Unit = {}
 ) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -61,7 +64,7 @@ fun SignUpScreen(
             Spacer(Modifier.height(8.dp))
 
             Text(
-                text = "Lorem ipsum dolor sit amet, consectetur",
+                text = "Create your account to start decorating smarter",
                 fontSize = 14.sp,
                 color = HintColor
             )
@@ -114,6 +117,20 @@ fun SignUpScreen(
                     password.isNotEmpty(),
             onClick = { onSignUpClick(email) }
         )
+
+        Spacer(Modifier.height(16.dp))
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Already have an account? ", color = HintColor, fontWeight = FontWeight.SemiBold)
+            Text(
+                "Sign In",
+                color = PrimaryGreen,
+                modifier = Modifier.clickable { onSignInClick() }
+            )
+        }
 
         Spacer(Modifier.height(24.dp))
 

@@ -96,6 +96,11 @@ fun NavGraph(
                 },
                 onSignUpClick = { email ->
                     navController.navigate(Routes.EnterOTP.createRoute(email))
+                },
+                onSignInClick = {
+                    navController.navigate(Routes.SignIn.route) {
+                        popUpTo(Routes.SignUp.route) { inclusive = true }
+                    }
                 }
             )
         }
