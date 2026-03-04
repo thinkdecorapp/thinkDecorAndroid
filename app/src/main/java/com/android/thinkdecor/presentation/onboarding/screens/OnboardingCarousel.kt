@@ -52,13 +52,6 @@ fun OnboardingCarouselScreen(
     var page by remember { mutableIntStateOf(0) }
     val pageCount = onboardingPages.size
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(2000)
-            page = (page + 1) % pageCount
-        }
-    }
-
     val current = onboardingPages[page]
 
     OnboardingLayout(
