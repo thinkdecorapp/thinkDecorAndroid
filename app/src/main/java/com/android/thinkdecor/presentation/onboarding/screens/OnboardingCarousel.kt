@@ -69,10 +69,10 @@ fun OnboardingCarouselScreen(
         totalPages = pageCount,
         ctaLabel = if (page == pageCount - 1) "Get Started" else "Continue",
         onCtaClick = {
-            if (page == pageCount - 1) {
-                onFinished()
-            } else {
+            if (page < pageCount - 1) {
                 page++
+            } else {
+                onFinished() // last page
             }
         },
         secondaryPrefix = if (page == pageCount - 1) "Don't have an account?" else null,

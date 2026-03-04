@@ -7,13 +7,13 @@ import com.android.thinkdecor.presentation.chat.models.UiMessage
 
 object FakeConversations {
     val mockConversations = listOf(
-        UiConversation("Victoria Avila", "That’s great, I look forward to hearing ba...", "11:20 am", 1, Color(0xFFB7D7C2)),
-        UiConversation("Fitted - Tech & Design", "Thecla: @ovo How is it going?", "11:11 am", 0, Color(0xFF0F6B5F)),
-        UiConversation("Demola Andreas", "Job Description.docx", "Yesterday", 1, Color(0xFF8FAADC)),
-        UiConversation("Ibi Cookey", "How is it going?", "Yesterday", 0, Color(0xFFFFCDD2)),
-        UiConversation("Thecla Ezenwa", "Please drop your morning update.", "Yesterday", 1, Color(0xFFFFE0B2)),
-        UiConversation("Tobi Ozenua", "Aight, noted.", "Yesterday", 1, Color(0xFFD1C4E9)),
-        UiConversation("Busola Ajala", "Aight, noted", "Yesterday", 1, Color(0xFFBBDEFB))
+        UiConversation("1", "Victoria Avila", "That’s great, I look forward to hearing ba...", "11:20 am", 1, Color(0xFFB7D7C2)),
+        UiConversation("2", "Fitted - Tech & Design", "Thecla: @ovo How is it going?", "11:11 am", 0, Color(0xFF0F6B5F)),
+        UiConversation("3", "Demola Andreas", "Job Description.docx", "Yesterday", 1, Color(0xFF8FAADC)),
+        UiConversation("4", "Ibi Cookey", "How is it going?", "Yesterday", 0, Color(0xFFFFCDD2)),
+        UiConversation("5", "Thecla Ezenwa", "Please drop your morning update.", "Yesterday", 1, Color(0xFFFFE0B2)),
+        UiConversation("6", "Tobi Ozenua", "Aight, noted.", "Yesterday", 1, Color(0xFFD1C4E9)),
+        UiConversation("7", "Busola Ajala", "Aight, noted", "Yesterday", 1, Color(0xFFBBDEFB))
     )
 }
 

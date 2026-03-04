@@ -3,9 +3,7 @@ package com.android.thinkdecor.presentation.navigation
 sealed class Routes(val route: String) {
 
     // Onboarding Routes
-
     object Splash : Routes("splash")
-
     object Onboarding : Routes("onboarding")
 
     // Authentication Routes
@@ -23,10 +21,24 @@ sealed class Routes(val route: String) {
     }
     object ChooseInterests : Routes("choose_interests")
 
+    // Dashboard Routes
+
+    object Dashboard : Routes("dashboard")
+    object Home : Routes("home")
+    object Explore : Routes("explore")
+    object Scan : Routes("scan")
+    object Conversations : Routes("conversations")
+    object Chat : Routes("chat/{id}") {
+        fun createRoute(id: String) = "chat/$id"
+    }
+
+    object Profile : Routes("profile")
+
     companion object {
         // Route constants for navigation arguments
         const val ARG_EMAIL = "email"
         const val ARG_TYPE = "type"
+        const val ARG_CHAT_ID = "id"
 
         // Success types
         const val SUCCESS_TYPE_PASSWORD_RESET = "password_reset"
