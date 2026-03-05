@@ -21,6 +21,7 @@ import com.android.thinkdecor.presentation.auth.screens.PopUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SignInScreen
 import com.android.thinkdecor.presentation.auth.screens.SignUpScreen
 import com.android.thinkdecor.presentation.auth.screens.SuccessPopup
+import com.android.thinkdecor.presentation.cart.CartScreen
 import com.android.thinkdecor.presentation.chat.mockData.FakeConversations
 import com.android.thinkdecor.presentation.chat.mockData.FakeMessages.mockChatMessages
 import com.android.thinkdecor.presentation.chat.screens.ChatScreen
@@ -254,7 +255,17 @@ fun NavGraph(
         }
 
         composable(route = Routes.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onCartClick = {
+                    navController.navigate(Routes.Cart.route)
+                }
+            )
+        }
+
+        composable(Routes.Cart.route) {
+            CartScreen(
+                onBackClick = { navController.popBackStack() }
+            )
         }
 
         composable(

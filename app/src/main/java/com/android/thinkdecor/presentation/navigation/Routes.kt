@@ -25,6 +25,8 @@ sealed class Routes(val route: String) {
 
     object Dashboard : Routes("dashboard")
     object Home : Routes("home")
+
+    object Cart : Routes("cart")
     object Explore : Routes("explore")
     object Scan : Routes("scan")
     object Conversations : Routes("conversations")

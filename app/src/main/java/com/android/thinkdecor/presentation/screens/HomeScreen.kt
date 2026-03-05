@@ -10,13 +10,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.android.thinkdecor.presentation.cart.CartActivity
 import com.android.thinkdecor.presentation.home.FurnitureEssentialsSection
 import com.android.thinkdecor.presentation.home.HomeScreenDetails
 import com.android.thinkdecor.presentation.home.SearchBar
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onCartClick: () -> Unit
+) {
     var showSearchScreen by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
@@ -30,10 +31,9 @@ fun HomeScreen() {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HomeScreenDetails(onCartClick = {
-                val navigate = Intent(context, CartActivity::class.java)
-                context.startActivity(navigate)
-            })
+            HomeScreenDetails(
+                onCartClick = onCartClick
+            )
             SearchBar(
                 onSearchClick = { showSearchScreen = true }
             )
