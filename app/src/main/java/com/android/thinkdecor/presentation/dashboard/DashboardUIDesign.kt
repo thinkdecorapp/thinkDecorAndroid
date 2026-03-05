@@ -74,7 +74,13 @@ fun DashboardUIDesign(
                 .navigationBarsPadding()
         ) {
 
-            composable(Routes.Home.route) { HomeScreen() }
+            composable(Routes.Home.route) {
+                HomeScreen(
+                    onCartClick = {
+                        parentNavController.navigate(Routes.Cart.route)
+                    }
+                )
+            }
 
             composable(Routes.Explore.route) { ExploreScreen() }
 

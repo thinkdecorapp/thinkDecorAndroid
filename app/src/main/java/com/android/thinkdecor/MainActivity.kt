@@ -6,24 +6,30 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.android.thinkdecor.presentation.dashboard.DashboardActivity
 import com.android.thinkdecor.presentation.navigation.NavGraph
 import com.android.thinkdecor.presentation.navigation.Routes
 import com.android.thinkdecor.presentation.ui.theme.ThinkDecorTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
         setContent {
+
             ThinkDecorTheme {
+
+                val navController = rememberNavController()
+
                 NavGraph(
-                    navController = rememberNavController(),
+                    navController = navController,
                     startDestination = Routes.Splash.route,
                     onSignInSuccess = {
-                        val intent = Intent(this@MainActivity, DashboardActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        navController.navigate(Routes.Dashboard.route) {
+                            popUpTo(0) { inclusive = true }
+                        }
                     }
                 )
             }
